@@ -21,10 +21,16 @@ export class Button extends React.Component {
         // let random = Math.floor(Math.random() * 100);
         // console.log('Generated a random number: ', random);
         // let m_text = this.state.user_message;
+        
+        //  *** user-message and user_name is sent from client to server ***
         Socket.emit('new message', {
             'user_name': this.state.user_name,
             'user_message': this.state.user_message
         });
+        // In order to clear the input field after sending the message.
+        this.setState({user_name: ''});
+        this.setState({user_message: ''});
+        
         console.log('Sent a message to server!',this);
         console.log('User Name:', this.state.user_name);
         console.log('User Message:', this.state.user_message);

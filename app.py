@@ -28,7 +28,7 @@ def on_new_message(data):
     server_received_message = data['user_message']
     print(server_received_name, server_received_message)
     # *** username and message sent from server to every client ***
-    socketio.emit('message received', {'server_sent_name': server_received_name,'server_sent_message': server_received_message});
+    socketio.emit('message received', {'user_name': server_received_name, 'user_message': server_received_message});
 
 socketio.run(
     app,

@@ -6,8 +6,7 @@ export class Content extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            'server_sent_name' : '',
-            'server_sent_message' : ''
+            'messages': []
         };
         this.componentDidMount = this.componentDidMount.bind(this);
     }
@@ -18,6 +17,8 @@ export class Content extends React.Component {
     }
     
     render() {
+        let final_message = this.state.server_sent_message;
+        let final_name = this.state.server_sent_name;
         return (
             <div>
                 <header className="main-nav">
@@ -59,8 +60,8 @@ export class Content extends React.Component {
                                 <p className="user-message">You guys are crazy.</p>
                             </div>
                             <div className="message-block">
-                                <h5 className="user-name"> {this.state.server_sent_name} </h5>
-                                <p className="user-message"> {this.state.server_sent_message} </p>
+                                <h5 className="user-name"> {final_name} </h5>
+                                <p className="user-message"> {final_message} </p>
                             </div>
                         </div>
                         
