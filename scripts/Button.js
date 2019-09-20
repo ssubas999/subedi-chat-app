@@ -12,6 +12,7 @@ export class Button extends React.Component {
         this.handleChangeName = this.handleChangeName.bind(this);
         this.handleChangeMessage = this.handleChangeMessage.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.canBeClicked = this.canBeClicked.bind(this);
     }
     
     handleSubmit(event){
@@ -28,7 +29,6 @@ export class Button extends React.Component {
             'user_message': this.state.user_message
         });
         // In order to clear the input field after sending the message.
-        this.setState({user_name: ''});
         this.setState({user_message: ''});
         
         console.log('Sent a message to server!',this);
@@ -44,8 +44,15 @@ export class Button extends React.Component {
         this.setState({user_name: event.target.value});
         console.log('user_name', event.target.value);
     }
-
+    
+    canBeClicked() {
+    // In order the disable the submit button when there no no input
+    const {user_name, user_message} = this.state;
+    return user_name.length > 0 && user_message.length > 0;
+    }
+    
     render() {
+        let isEnabled = this.canBeClicked();
         return (
             <div>
                 <form className = "enter-chat" onSubmit = {this.handleSubmit}>
@@ -62,7 +69,7 @@ export class Button extends React.Component {
                         <textarea className="type-box" cols="50" rows="3" placeholder = "Type a message..." value = {this.state.user_message} onChange = {this.handleChangeMessage}></textarea>
                     </div>
                     <div>
-                        <button ><i className="fas fa-arrow-circle-up fa-3x"></i> </button>
+                        <button disabled = {!isEnabled}>Send</button>
                     </div>
                 </form>
             </div>

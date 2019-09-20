@@ -19,6 +19,7 @@ export class Content extends React.Component {
     render() {
         let final_message = this.state.server_sent_message;
         let final_name = this.state.server_sent_name;
+        
         return (
             <div>
                 <header className="main-nav">
