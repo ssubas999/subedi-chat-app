@@ -4,7 +4,7 @@ app = flask.Flask(__name__)
 socketio = flask_socketio.SocketIO(app)
 
 # We are going to move this later
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://purple:purpleisawesome@localhost/postgres'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://ssubas999:1Maryland1@localhost/postgres'
 db = flask_sqlalchemy.SQLAlchemy(app)
 
 
@@ -15,9 +15,20 @@ def hello():
 @socketio.on('connect')
 def on_connect():
     print('Someone connected!')
-    flask_socketio.emit('update', {
-        'user_message': 'Got your connection!'
-    })
+    
+@socketio.on('disconnect')
+def on_disconnect():
+    print('Someone disconnected!')
+    
+# *** Server received new message event sent by client ***
+@socketio.on('new message')
+def on_new_message(data):
+    print ("Got an event for new message with data: "+ str(data))
+    server_received_name = data['user_name']
+    server_received_message = data['user_message']
+    print(server_received_name, server_received_message)
+    # *** username and message sent from server to every client ***
+    socketio.emit('message received', {'server_sent_name': server_received_name,'server_sent_message': server_received_message});
 
 socketio.run(
     app,
