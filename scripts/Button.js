@@ -17,11 +17,6 @@ export class Button extends React.Component {
     
     handleSubmit(event){
         event.preventDefault();
-    
-        // this is a local variable so we don't need to initialize in the constructor
-        // let random = Math.floor(Math.random() * 100);
-        // console.log('Generated a random number: ', random);
-        // let m_text = this.state.user_message;
         
         //  *** user-message and user_name is sent from client to server ***
         Socket.emit('new message', {

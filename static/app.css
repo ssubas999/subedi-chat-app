@@ -50,7 +50,7 @@ header .container a:hover {
 }
 
 .chat-app .message-log {
-    background: #320741;
+    background: #32071;
     border-radius: 15px 15px 0px 0px;
     padding: 10px 5px;
     margin-bottom: 10px;
@@ -58,14 +58,28 @@ header .container a:hover {
     overflow: auto;
 }
 .chat-app .message-log .message-block {
-    background: #562056;
+    background:#76637D;
     margin-bottom: 10px;
     padding: 8px 8px;
     border-radius: 15px 3px 15px 3px;
 }
+.chat-app .message-log .message-block li{
+    background: #3F1050;
+    border-radius: 15px 4px 15px 4px;
+    margin-bottom: 8px;
+    padding: 3px 7px;
+}
+
+.chat-app .message-log .message-block .chatbot{
+    background: #5fc9f8;
+}
+
+.chat-app .message-log .message-block .chatbot .user-name{
+    color: #744D15;
+}
 
 .chat-app .message-log .message-block .user-name {
-    color: #71f1d3;
+    color: #23e5e3;
     margin-bottom: 5px;
 }
 
