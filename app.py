@@ -8,11 +8,6 @@ user_count = 0
 
 socketio = flask_socketio.SocketIO(app)
 
-# We are going to move this later
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://ssubas999:1Maryland1@localhost/postgres'
-# db = flask_sqlalchemy.SQLAlchemy(app)
-
-
 @app.route('/')
 def hello():
     return flask.render_template('index.html')
