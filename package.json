@@ -21,6 +21,7 @@
     "webpack": "^3.12.0"
   },
   "dependencies": {
+    "react-scrollable-feed": "^1.0.4",
     "socket.io-client": "^2.2.0"
   }
 }

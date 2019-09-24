@@ -15,6 +15,11 @@ export class Button extends React.Component {
         this.canBeClicked = this.canBeClicked.bind(this);
     }
     
+    componentDidMount(){
+        Socket.on('user count', (count) => {this.setState({'user_count': count['active_user_count']})});
+        console.log(this.state.user_count)
+    }
+    
     handleSubmit(event){
         event.preventDefault();
         
@@ -55,13 +60,13 @@ export class Button extends React.Component {
                         <input type="text" placeholder="Enter your name" name="name" value = {this.state.user_name} onChange = {this.handleChangeName}></input>
                     </div>
                     <div className = "connected-users">
-                        <h5>Connected users: 5</h5>
+                        <h5>Active Users: { this.state.user_count }</h5>
                     </div>
                 </form>
                 
                 <form className = "reply-area" onSubmit = {this.handleSubmit}>
                     <div>
-                        <textarea className="type-box" cols="50" rows="3" placeholder = "Type a message..." value = {this.state.user_message} onChange = {this.handleChangeMessage}></textarea>
+                        <textarea className="type-box" cols="50" rows="2" placeholder = "Type a message..." value = {this.state.user_message} onChange = {this.handleChangeMessage}></textarea>
                     </div>
                     <div>
                         <button disabled = {!isEnabled}>Send</button>

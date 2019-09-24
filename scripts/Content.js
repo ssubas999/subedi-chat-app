@@ -12,7 +12,7 @@ export class Content extends React.Component {
     }
     
     componentDidMount(){
-        Socket.on('message received', (data) => {this.setState({'server_sent_name': data['user_name'], 'server_sent_message': data['user_message'], 'messages': data['messages_list']})});
+        Socket.on('message received', (data) => {this.setState({'messages': data['messages_list']})});
         console.log('Lets see:', this.state);
         console.log(this.state.messages)
     }
@@ -44,9 +44,9 @@ export class Content extends React.Component {
                                 <ul>
                                     <li className = "chatbot">
                                         <h5 className="user-name">Bot</h5>
-                                        <p className="user-message">Hi, I am chatbot.</p>
+                                        <p className="user-message">Hi, my name is Sam. I am a chat-bot. Type and send anything if you wish to see the prviouse messages.</p>
                                     </li>
-                                    { final_messages.map( name_message => 
+                                    { final_messages.map( name_message =>
                                     <li key = {name_message[0].id}>
                                         <div>
                                             <h5 className="user-name"> {name_message[0]}</h5>
