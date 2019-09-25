@@ -2,4 +2,3 @@ flask
 flask_socketio
 Flask-SQLAlchemy==2.1
 psycopg2-binary
-psycopg2
