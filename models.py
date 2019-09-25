@@ -10,7 +10,7 @@ db = flask_sqlalchemy.SQLAlchemy(app.app)
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     user_name = db.Column(db.String(25))
-    user_message = db.Column(db.Text)
+    user_message = db.Column(db.String(200))
     
     def __init__(self, name, message):
         self.user_name = name
