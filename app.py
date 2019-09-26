@@ -1,9 +1,10 @@
-import os, flask, flask_socketio, flask_sqlalchemy, psycopg2
+import os, flask, flask_socketio, flask_sqlalchemy
 
 app = flask.Flask(__name__)
+
 import models
 
-# Variable that keeps track of active user scount
+# Variable that keeps track of active user count
 user_count = 0
 
 socketio = flask_socketio.SocketIO(app)
@@ -54,7 +55,7 @@ def chatBot(name, message):
 # *** Server received new message event sent by client ***
 @socketio.on('new message')
 def on_new_message(data):
-    # print ("Got an event for new message with data: "+ str(data))
+    print ("Got an event for new message with data: "+ str(data))
     server_received_name = data['user_name']
     server_received_message = data['user_message']
     
@@ -65,30 +66,50 @@ def on_new_message(data):
     
     # ***************************
     # Connect to the postgresql using psycopg2
-    con = psycopg2.connect(database="postgres", user="ssubas999", password="1Maryland1", host="127.0.0.1", port="5432")
-    print("Database opened successfully")
+    # con = psycopg2.connect(database="postgres", user="ssubas999", password="1Maryland1", host="127.0.0.1", port="5432")
+    # print("Database opened successfully")
     
     # Insert data to the database
-    cur = con.cursor()
-    cur.execute("INSERT INTO Message (user_name, user_message) VALUES (%s, %s)", (server_received_name, server_received_message));
-    con.commit()
-    print("Record inserted successfully")
-    con.close()
+    print("Server received name: ", server_received_name);
+    print("Server received message: ", server_received_message);
+    
+    message = models.Message(server_received_name, server_received_message)
+    models.db.session.add(message)
+    models.db.session.commit()
+    
+    # cur = con.cursor()
+    # cur.execute("INSERT INTO Message (user_name, user_message) VALUES (%s, %s)", (server_received_name, server_received_message));
+    # con.commit()
+    # print("Record inserted successfully")
+    # con.close()
     
     # Connect to the database again
-    con = psycopg2.connect(database="postgres", user="ssubas999", password="1Maryland1", host="127.0.0.1", port="5432")
-    print("Database opened successfully")
+    # con = psycopg2.connect(database="postgres", user="ssubas999", password="1Maryland1", host="127.0.0.1", port="5432")
+    # print("Database opened successfully")
     
     # Retrieving the data from database
-    cur = con.cursor()
-    cur.execute("SELECT user_name, user_message from Message")
-    rows = cur.fetchall()
+    stored_messages = models.Message.query.all()
+    new_list = []
+    print("Stored Messages:", stored_messages)
     
-    new_list = list(rows)
-    # print(new_list)
-    for name_message_list in rows:
-        name = name_message_list[0]
-        message = name_message_list[1]
+    for s in stored_messages:
+        name = s.user_name
+        message = s.user_message
+        
+        chat_list = [name, message]
+        new_list.append(chat_list)
+        
+    print("New List: ", new_list)
+    
+    # cur = con.cursor()
+    # cur.execute("SELECT user_name, user_message from Message")
+    # rows = cur.fetchall()
+    
+    # new_list = list(rows)
+    # # print(new_list)
+    # for name_message_list in rows:
+    #     name = name_message_list[0]
+    #     message = name_message_list[1]
 
     print("Active online user: ", user_count)
     
