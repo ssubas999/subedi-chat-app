@@ -25,13 +25,13 @@ export class Content extends React.Component {
                 <header className="main-nav">
                     <div className="container">
                         <div>
-                            <h4><a href="https://www.subassubedi.com/" target="_blank">About</a></h4>
+                            <h4><a href="https://github.com/msu-fa19-cosc458/project2-cp1-susub3" target="_blank">About</a></h4>
                         </div>
                         <div>
-                            <h4><a href="https://www.subassubedi.com/" target="_blank">Tech</a></h4>
+                            <h4><a href="https://github.com/msu-fa19-cosc458/project2-cp1-susub3" target="_blank">Tech</a></h4>
                         </div>
                         <div>
-                            <h4><a href="https://www.subassubedi.com/" target="_blank">Source Code</a></h4>
+                            <h4><a href="https://github.com/msu-fa19-cosc458/project2-cp1-susub3" target="_blank">Source Code</a></h4>
                         </div>
                     </div>
                 </header>
