@@ -19,7 +19,7 @@ This program is a simple public online chat application where multiple people ca
 1. This is a complete web application written in cloud ( with AWS-cloud9 IDE).
 2. I used React and Vanilla JavaScript as the fronted-end programming language and Python as the server-side programming language. The client (a browser) communicates with server via Websocket (Socket.io in this case) and stores the data sent from client to server on database (PostgreSQL).
 
-### Encountered Issues:
+3. Encountered Issues:
 - As I was using react for the first time, it was quite confusing at the begining just to understand how it works.
 - Creating a component on react was quite frustrating in some cases. However, I created multiple components sucessfully for this project.
 - Took a time to understand the tree to components.
