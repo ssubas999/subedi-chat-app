@@ -24,8 +24,8 @@ This program is a simple public online chat application where multiple people ca
 - Creating a component on react was quite frustrating in some cases. However, I created multiple components sucessfully for this project.
 - Took a time to understand the tree to components.
 - Websocket was the first technology that I have worked with that can have two-way communication over single TCP. Took long time to understand how does it exactly works.
-- I think PostgreSQL is quite problematic on iteself and used psycopg2 library for ease. However, psycopg2 created more complexity than expected. Which is still an issue.
+- I think PostgreSQL is quite problematic on iteself and used psycopg2 library for ease. However, psycopg2 created more complexity than expected. I fixed it by completely avoiding use of psycopg2.
 
 
 ### Known Problems:
-Even though I don't have any known problems while running on AWS, this application doesn't work as expected after deploying on heroku. I Tried to deploy on heroku more than 5 times with different configuration but didn't solve the issue. I think it is the problem with certain version of psycopg2 library that I used to acces PostgreSQL. 
+This app doesn't have any known problems as of my knowledge.
