@@ -1,0 +1,8 @@
+header {
+    display: none;
+}
+
+.chat-app .container {
+    max-width: 100vw;
+    height: auto;
+}

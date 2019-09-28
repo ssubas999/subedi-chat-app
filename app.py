@@ -1,8 +1,6 @@
-import os, flask, flask_socketio, flask_sqlalchemy
+import os, flask, flask_socketio, flask_sqlalchemy, models
 
 app = flask.Flask(__name__)
-
-import models
 
 # Variable that keeps track of active user count
 user_count = 0
@@ -64,11 +62,6 @@ def on_new_message(data):
         server_received_name = chatBot(server_received_name, server_received_message)[0]
         server_received_message = chatBot(server_received_name, server_received_message)[1]
     
-    # ***************************
-    # Connect to the postgresql using psycopg2
-    # con = psycopg2.connect(database="postgres", user="ssubas999", password="1Maryland1", host="127.0.0.1", port="5432")
-    # print("Database opened successfully")
-    
     # Insert data to the database
     print("Server received name: ", server_received_name);
     print("Server received message: ", server_received_message);
@@ -76,16 +69,7 @@ def on_new_message(data):
     message = models.Message(server_received_name, server_received_message)
     models.db.session.add(message)
     models.db.session.commit()
-    
-    # cur = con.cursor()
-    # cur.execute("INSERT INTO Message (user_name, user_message) VALUES (%s, %s)", (server_received_name, server_received_message));
-    # con.commit()
-    # print("Record inserted successfully")
-    # con.close()
-    
-    # Connect to the database again
-    # con = psycopg2.connect(database="postgres", user="ssubas999", password="1Maryland1", host="127.0.0.1", port="5432")
-    # print("Database opened successfully")
+    print("Record inserted successfully")
     
     # Retrieving the data from database
     stored_messages = models.Message.query.all()
@@ -100,23 +84,11 @@ def on_new_message(data):
         new_list.append(chat_list)
         
     print("New List: ", new_list)
-    
-    # cur = con.cursor()
-    # cur.execute("SELECT user_name, user_message from Message")
-    # rows = cur.fetchall()
-    
-    # new_list = list(rows)
-    # # print(new_list)
-    # for name_message_list in rows:
-    #     name = name_message_list[0]
-    #     message = name_message_list[1]
-
     print("Active online user: ", user_count)
     
     # *** Active user count sent from server to every client ***
     socketio.emit('user count', {'active_user_count': user_count});
-    
-    # ***************************
+
     # *** Lists of username and message sent from server to every client ***
     socketio.emit('message received', {'messages_list': new_list});
 
