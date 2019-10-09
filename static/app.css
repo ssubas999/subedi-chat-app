@@ -99,6 +99,11 @@ header .container a:hover {
     padding-right: 12px;
 }
 
+/*.chat-app .enter-chat .google-login-button{*/
+/*    height: 45px;*/
+/*    width:auto;*/
+/*}*/
+
 .chat-app .enter-chat .connected-users{
     font-size: 1.0rem;
     margin-right: 5px;

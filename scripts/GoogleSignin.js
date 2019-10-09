@@ -33,6 +33,7 @@ export class GoogleSignin extends React.Component {
         // this.handleClick = this.handleClick.bind(this);
     }
     
+    
     // handleClick(event){
     //     let auth = gapi.auth2.getAuthInstance();
     // 	let user = auth.currentUser.get();
