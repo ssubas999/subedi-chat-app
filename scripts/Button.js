@@ -1,6 +1,8 @@
 import * as React from 'react';
-
+import { GoogleSignin } from './GoogleSignin';
 import { Socket } from './Socket';
+
+/* global gapi */
 
 export class Button extends React.Component {
     constructor(props) {
@@ -22,7 +24,6 @@ export class Button extends React.Component {
     
     handleSubmit(event){
         event.preventDefault();
-        
         //  *** user-message and user_name is sent from client to server ***
         Socket.emit('new message', {
             'user_name': this.state.user_name,
@@ -56,6 +57,12 @@ export class Button extends React.Component {
         return (
             <div>
                 <form className = "enter-chat" onSubmit = {this.handleSubmit}>
+                
+                
+                    <div>
+                        <GoogleSignin />
+                    </div>
+                    
                     <div className = "enter-chat-input">
                         <input type="text" placeholder="Enter your name" name="name" value = {this.state.user_name} onChange = {this.handleChangeName}></input>
                     </div>

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Button } from './Button';
+import { GoogleSignin } from './GoogleSignin';
 import { Socket } from './Socket';
 
 export class Content extends React.Component {

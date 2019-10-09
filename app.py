@@ -1,4 +1,11 @@
 import os, flask, flask_socketio, flask_sqlalchemy, models
+# ********
+# Importing library for parsing and validation of URIs (RFC 3986)
+from rfc3987 import parse
+
+from google.oauth2 import id_token
+from google.auth.transport import requests
+# ********
 
 app = flask.Flask(__name__)
 
@@ -23,6 +30,21 @@ def on_disconnect():
     global user_count
     user_count -= 1
     
+    
+# Function to check in the input is an url.
+def isURL(string):
+    try:
+        parse(string, rule='URI')
+        print("Got an URL:", parse(string, rule='URI'))
+        message = "Got an URL"
+    except:
+        print("Not an URL.")
+        message = "Not an url"
+    return message
+print(isURL('Subas Subedi'))
+
+
+
 # Making bot-responses
 def chatBot(name, message):
     if message == "!! about":
@@ -49,7 +71,35 @@ def chatBot(name, message):
         name = "Sam(chat-Bot)"
         message = "Sorry! I am unable to answer this question. Type '!! sam' to see the lists of commands."
         return name, message
+
+
+# *** Server received the google 'id_token' sent from client (GoogleSignin.js)
+@socketio.on('google token')
+def on_google_token_id(token):
+    print ("Got an event for GOOGLE TOKEN ID: "+ str(token))
+    try:
+        # Specify the CLIENT_ID of the app that accesses the backend:
+        # To validate an ID token in Python, using the verify_oauth2_token function
+        CLIENT_ID = '641650714654-3nvhsfpcnhgiljvfrhj70f7idk3uv0gi.apps.googleusercontent.com'
+        idinfo = id_token.verify_oauth2_token(token['google_user_token'], requests.Request(), CLIENT_ID)
     
+        if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
+            raise ValueError('Wrong issuer.')
+    
+        # ID token is valid. Get the user's Google Account ID from the decoded token.
+        userid = idinfo['sub']
+        
+        print(idinfo)
+        print("************")
+        print("Name: "+ idinfo['name'])
+        print("Imageurl: "+ idinfo['picture'])
+        print("Email: "+ idinfo['email'])
+        print("************")
+        
+    except ValueError:
+        # Invalid token
+        print("Invalid token")
+
 # *** Server received new message event sent by client ***
 @socketio.on('new message')
 def on_new_message(data):
