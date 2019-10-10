@@ -71,7 +71,7 @@ header .container a:hover {
     background: #3F1050;
     border-radius: 15px 4px 15px 4px;
     margin-bottom: 8px;
-    padding: 3px 7px;
+    padding: 3px 3px;
     overflow: visible;
 }
 
@@ -90,6 +90,22 @@ header .container a:hover {
 
 .chat-app .message-log .message-block .user-message {
     font-size: 0.9rem;
+}
+
+.chat-app .message-log .message-block .message-with-image .user-image{
+    height: 40px;
+    width: auto;
+    border-radius: 50%;
+}
+
+.chat-app .message-log .message-block .message-with-image{
+    display: grid;
+    grid-row-gap: 1rem;
+    grid-template-columns: 40px auto;
+}
+
+.chat-app .message-log .message-block .message-with-image div {
+    margin-left: 8px;
 }
 
 .chat-app .enter-chat{

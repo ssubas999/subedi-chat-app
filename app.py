@@ -72,6 +72,8 @@ def chatBot(name, message):
         message = "Sorry! I am unable to answer this question. Type '!! sam' to see the lists of commands."
         return name, message
 
+# Initializing a varible to store imageurl inside function below
+server_received_imageurl = ""
 
 # *** Server received the google 'id_token' sent from client (GoogleSignin.js)
 @socketio.on('google token')
@@ -89,13 +91,17 @@ def on_google_token_id(token):
         # ID token is valid. Get the user's Google Account ID from the decoded token.
         userid = idinfo['sub']
         
+        # In order to insert on database and send it to client later + making global variable
+        global server_received_imageurl
+        server_received_imageurl = idinfo['picture']
+        
         print(idinfo)
         print("************")
         print("Name: "+ idinfo['name'])
         print("Imageurl: "+ idinfo['picture'])
         print("Email: "+ idinfo['email'])
         print("************")
-        
+    
     except ValueError:
         # Invalid token
         print("Invalid token")
@@ -115,8 +121,9 @@ def on_new_message(data):
     # Insert data to the database
     print("Server received name: ", server_received_name);
     print("Server received message: ", server_received_message);
+    print("Server received imageurl:", server_received_imageurl)
     
-    message = models.Message(server_received_name, server_received_message)
+    message = models.Message(server_received_name, server_received_message, server_received_imageurl)
     models.db.session.add(message)
     models.db.session.commit()
     print("Record inserted successfully")
@@ -129,8 +136,9 @@ def on_new_message(data):
     for s in stored_messages:
         name = s.user_name
         message = s.user_message
+        image = s.user_image
         
-        chat_list = [name, message]
+        chat_list = [name, message, image]
         new_list.append(chat_list)
         
     print("New List: ", new_list)
