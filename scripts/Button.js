@@ -9,9 +9,6 @@ let active_user_count = 0;
 let signedin = false;
 const responseGoogle = (response) => {
     console.log("Hey, I am from Button.js")
-    console.log(response.profileObj.name);
-    console.log(response.profileObj.imageUrl);
-    console.log(response.profileObj.email);
     console.log("*************");
     
     let auth = gapi.auth2.getAuthInstance();
