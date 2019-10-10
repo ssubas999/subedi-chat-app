@@ -2,3 +2,7 @@ flask
 flask_socketio
 Flask-SQLAlchemy==2.1
 psycopg2-binary
+react-google-login
+rfc3987
+google.oauth2
+google.auth.transport
