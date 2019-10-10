@@ -3,6 +3,7 @@ import { Button } from './Button';
 import { GoogleSignin } from './GoogleSignin';
 import { Socket } from './Socket';
 
+
 export class Content extends React.Component {
     constructor(props){
         super(props);
@@ -49,10 +50,12 @@ export class Content extends React.Component {
                                     </li>
                                     { final_messages.map( name_message =>
                                     <li key = {name_message[0].id} className = "message-with-image">
-                                        <img src={name_message[2]} alt = "User Image" className = "user-image"></img>
+                                        <img src={name_message[3]} alt = "User Image" className = "user-image"></img>
                                         <div>
                                             <h5 className="user-name"> {name_message[0]}</h5>
-                                            <p className="user-message"> {name_message[1]} </p>
+                                            {(name_message[1].length > 0) && <a className="user-message" href = {name_message[1]} target="_blank">Link attached.</a>}
+                                            {(name_message[2].length > 0) && <p className="user-message"> {name_message[2]} </p>}
+                                            
                                         </div>
                                     </li> )}
                                 </ul>

@@ -9,9 +9,6 @@ from google.auth.transport import requests
 
 app = flask.Flask(__name__)
 
-# Variable that keeps track of active user count
-user_count = 0
-
 socketio = flask_socketio.SocketIO(app)
 
 @app.route('/')
@@ -21,29 +18,30 @@ def hello():
 @socketio.on('connect')
 def on_connect():
     print('Someone connected!')
-    global user_count
-    user_count += 1
+
 
 @socketio.on('disconnect')
 def on_disconnect():
     print('Someone disconnected!')
-    global user_count
-    user_count -= 1
     
     
 # Function to check in the input is an url.
 def isURL(string):
+    url_message = ""
+    nonurl_message = ""
     try:
-        parse(string, rule='URI')
-        print("Got an URL:", parse(string, rule='URI'))
-        message = "Got an URL"
+        parsed_message = parse(string, rule='URI')
+        # checked_message = "<a href=" + string + "></a>"
+        url_message = string
+        print("Got an URL:", url_message)
     except:
-        print("Not an URL.")
-        message = "Not an url"
-    return message
-print(isURL('Subas Subedi'))
+        nonurl_message = string
+        print("Not an URL: ", nonurl_message)
+    return url_message, nonurl_message
 
-
+print("************")
+print("Function print: ", isURL("https://www.subassubedi.com/"))
+print("************")
 
 # Making bot-responses
 def chatBot(name, message):
@@ -74,6 +72,7 @@ def chatBot(name, message):
 
 # Initializing a varible to store imageurl inside function below
 server_received_imageurl = ""
+server_received_name = ""
 
 # *** Server received the google 'id_token' sent from client (GoogleSignin.js)
 @socketio.on('google token')
@@ -95,7 +94,10 @@ def on_google_token_id(token):
         global server_received_imageurl
         server_received_imageurl = idinfo['picture']
         
-        print(idinfo)
+        global server_received_name
+        server_received_name = idinfo['name']
+        
+        
         print("************")
         print("Name: "+ idinfo['name'])
         print("Imageurl: "+ idinfo['picture'])
@@ -110,13 +112,15 @@ def on_google_token_id(token):
 @socketio.on('new message')
 def on_new_message(data):
     print ("Got an event for new message with data: "+ str(data))
-    server_received_name = data['user_name']
+    # server_received_name = data['user_name']
     server_received_message = data['user_message']
     
     # Checking response for the bot.
-    if server_received_message.startswith("!!"):
+    if server_received_message[:2] == "!!":
+        global server_received_name
         server_received_name = chatBot(server_received_name, server_received_message)[0]
         server_received_message = chatBot(server_received_name, server_received_message)[1]
+        
     
     # Insert data to the database
     print("Server received name: ", server_received_name);
@@ -138,14 +142,16 @@ def on_new_message(data):
         message = s.user_message
         image = s.user_image
         
-        chat_list = [name, message, image]
+        # ********
+        url = isURL(message)[0]
+        non_url = isURL(message)[1]
+        # ********
+        
+        # chat_list = [name, message, image]
+        chat_list = [name, url, non_url, image]
         new_list.append(chat_list)
         
     print("New List: ", new_list)
-    print("Active online user: ", user_count)
-    
-    # *** Active user count sent from server to every client ***
-    socketio.emit('user count', {'active_user_count': user_count});
 
     # *** Lists of username and message sent from server to every client ***
     socketio.emit('message received', {'messages_list': new_list});
