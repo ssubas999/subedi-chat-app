@@ -8,12 +8,11 @@ import { Socket } from './Socket';
 let active_user_count = 0;
 let signedin = false;
 const responseGoogle = (response) => {
-    console.log("Hey, I am from GoogleSignin.js")
+    console.log("Hey, I am from Button.js")
     console.log(response.profileObj.name);
     console.log(response.profileObj.imageUrl);
     console.log(response.profileObj.email);
     console.log("*************");
-    console.log(response);
     
     let auth = gapi.auth2.getAuthInstance();
     let user = auth.currentUser.get();
@@ -42,16 +41,10 @@ export class Button extends React.Component {
             user_message: ''
         };
         
-        // this.handleChangeName = this.handleChangeName.bind(this);
         this.handleChangeMessage = this.handleChangeMessage.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.canBeClicked = this.canBeClicked.bind(this);
     }
-    
-    // componentDidMount(){
-    //     Socket.on('user count', (count) => {this.setState({'user_count': count['active_user_count']})});
-    //     console.log(this.state.user_count)
-    // }
     
     handleSubmit(event){
         event.preventDefault();
@@ -72,10 +65,6 @@ export class Button extends React.Component {
         console.log('user_message', event.target.value);
     }
     
-    // handleChangeName(event) {
-    //     this.setState({user_name: event.target.value});
-    //     console.log('user_name', event.target.value);
-    // }
     
     canBeClicked() {
     // In order the disable the submit button when there no no input
