@@ -3,5 +3,4 @@ flask_socketio
 Flask-SQLAlchemy==2.1
 psycopg2-binary
 rfc3987
-google.oauth2
-google.auth.transport
+google-api-python-client
