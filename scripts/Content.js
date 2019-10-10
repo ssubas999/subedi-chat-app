@@ -48,7 +48,8 @@ export class Content extends React.Component {
                                         <p className="user-message">Hi, my name is Sam. I am a chat-bot. Type and send anything if you wish to see the prviouse messages.</p>
                                     </li>
                                     { final_messages.map( name_message =>
-                                    <li key = {name_message[0].id}>
+                                    <li key = {name_message[0].id} className = "message-with-image">
+                                        <img src={name_message[2]} alt = "User Image" className = "user-image"></img>
                                         <div>
                                             <h5 className="user-name"> {name_message[0]}</h5>
                                             <p className="user-message"> {name_message[1]} </p>
