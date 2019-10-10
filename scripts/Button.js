@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { GoogleLogin } from 'react-google-login';
+import { GoogleLogout } from 'react-google-login';
 import { Socket } from './Socket';
 
 /* global gapi */
@@ -24,6 +25,11 @@ const responseGoogle = (response) => {
             'google_user_token': user.getAuthResponse().id_token
         });
     }
+}
+
+const logout = (response) => {
+    signedin = false;
+    console.log("User just got logged out.")
 }
 
 
@@ -92,6 +98,13 @@ export class Button extends React.Component {
                             className = "google-login-button"
                         />
                     </div>
+                    
+                    <GoogleLogout 
+                        clientId="641650714654-3nvhsfpcnhgiljvfrhj70f7idk3uv0gi.apps.googleusercontent.com"
+                        buttonText="Logout"
+                        onLogoutSuccess={logout}
+                    >
+                    </GoogleLogout>
                     
                     <div className = "enter-chat-input">
                         <input type="text" placeholder="Enter your name" name="name" value = {this.state.user_name} onChange = {this.handleChangeName}></input>
