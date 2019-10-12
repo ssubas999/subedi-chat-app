@@ -26,7 +26,7 @@ This program is a simple public online chat application where multiple people ca
 - I think PostgreSQL is quite problematic on iteself and used psycopg2 library for ease. However, psycopg2 created more complexity than expected. I fixed it by completely avoiding use of psycopg2.
 
 
-### Known Problems:
+4. Known Problems:
 - One of the issue I am having at this version is that user cannnot send any message of length longer than 120 characters.
 
-If I had would had more time I would have created the entire new database with where I can store messages of any length (I means as allowed by postgresql) so that a current issue would have been fixed.
+5. If I had would had more time I would have created the entire new database with where I can store messages of any length (I means as allowed by postgresql) so that a current issue would have been fixed.
