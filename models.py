@@ -3,8 +3,8 @@ import os, flask_sqlalchemy, app
 
 
 # app.app = app modules app variable
-app.app.config['SQLALCHEMY_DATABASE_URI']  = os.getenv('DATABASE_URL')
-# app.app.config['SQLALCHEMY_DATABASE_URI']  = 'postgresql://ssubas999:1Maryland1@localhost/postgres'
+# app.app.config['SQLALCHEMY_DATABASE_URI']  = os.getenv('DATABASE_URL')
+app.app.config['SQLALCHEMY_DATABASE_URI']  = 'postgresql://ssubas999:1Maryland1@localhost/postgres'
 db = flask_sqlalchemy.SQLAlchemy(app.app)
 
 

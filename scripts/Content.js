@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Button } from './Button';
-import { GoogleSignin } from './GoogleSignin';
 import { Socket } from './Socket';
 
 
@@ -46,7 +45,7 @@ export class Content extends React.Component {
                                 <ul>
                                     <li className = "chatbot">
                                         <h5 className="user-name">Bot</h5>
-                                        <p className="user-message">Hi, my name is Sam. I am a chat-bot. Type and send anything if you wish to see the prviouse messages.</p>
+                                        <p className="user-message">Hi, my name is Sam. I am a Chat-Bot. Type and send anything if you wish to see the previouse messages. Want to know more about me? Well, I love to catch 'Ditto' on pokemon go. Type and send '!! help' to see list of commands.</p>
                                     </li>
                                     { final_messages.map( name_message =>
                                     <li key = {name_message[0].id} className = "message-with-image">
