@@ -1,7 +1,7 @@
 import os, flask, flask_socketio, flask_sqlalchemy, random
 from requests import *
 import models
-# ********
+
 # Importing library for parsing and validation of URIs (RFC 3986)
 from rfc3987 import parse
 
