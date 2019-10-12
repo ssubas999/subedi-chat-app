@@ -5,5 +5,3 @@ psycopg2-binary
 requests
 rfc3987
 google-api-python-client
-json
-random
