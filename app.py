@@ -1,4 +1,6 @@
-import os, flask, flask_socketio, flask_sqlalchemy, models
+import os, flask, flask_socketio, flask_sqlalchemy, json, random
+from requests import *
+import models
 # ********
 # Importing library for parsing and validation of URIs (RFC 3986)
 from rfc3987 import parse
@@ -43,32 +45,61 @@ print("************")
 print("Function print: ", isURL("https://www.subassubedi.com/"))
 print("************")
 
+
+# For Pokemon api
+def getJson(url):
+    # Requesting information using 'requests'
+    response = get(url)
+    json_body = response.json()
+    return json_body
+
 # Making bot-responses
 def chatBot(name, message):
-    if message == "!! about":
-        name = "Sam(Chat-Bot)"
+    poke_url = "https://pokeapi.co/api/v2/pokemon/ditto/"
+    json_response = getJson(poke_url)
+    # print(json_response)
+    abilities = json_response["abilities"]
+    abilities_list = []
+    for i in range(len(abilities)):
+        abilities_list.append(abilities[i]["ability"]["name"])
+    # print(abilities_list)
+    random_ability = random.choice(abilities_list)
+    # print(random_ability)
+    
+    base_experience = json_response["base_experience"]
+    # print(base_experience)
+    
+    poke_height = json_response["height"]
+    # print(poke_height)
+    
+    poke_id = json_response["id"]
+    # print(poke_id)
+    
+    name = "Sam(Chat-Bot)"
+    if message[:8] == "!! ditto":
+        if message == "!! ditto ability":
+            message = "Ditto's one of the ability is " + random_ability + "."
+        elif message == "!! ditto base experience":
+            message = "Ditto's base experience is " + str(base_experience) + "."
+        elif message == "!! ditto height":
+            message = "Ditto's height is " + str(poke_height) + "."
+        elif message == "!! ditto id":
+            message = "Ditto's id is " + str(poke_id) + "."
+        else:
+            message = "Umm! Looks like you know more about ditto than I do. Sorry, this is out of my knowledge."
+    elif message == "!! about":
         message = "Hi, my name is Sam. I am a chat-bot created by Subas."
-        return name, message
     elif message == "!! help":
-        name = "Sam(Chat-Bot)"
-        message = "To enter the chat, send your first message."
-        return name, message
-    elif message == "!! say <something>":
-        name = "Sam(Chat-Bot)"
+        message = "Commands: '!! about','!! say something','!! source','!! developer','!! ditto ability','!! ditto id','!! ditto height'."
+    elif message == "!! say something":
         message = "Hi, how are you feeling today?"
-        return name, message
     elif message == "!! source":
-        name = "Sam(Chat-Bot)"
         message = "To find the source code of this web-app, visit the 'Source Code' tab at the top the page."
-        return name, message
-    elif message == "!! sam":
-        name = "Sam(Chat-Bot)"
-        message = "List of commands-'!! about': More about me.'!! help': For help.'!! source': To find the source code of this web-app."
-        return name, message
+    elif message == "!! developer":
+        message = "This app is created by Subas Subedi. Want to know more about him? Visit www.subassubedi.com."
     else:
-        name = "Sam(chat-Bot)"
         message = "Sorry! I am unable to answer this question. Type '!! sam' to see the lists of commands."
-        return name, message
+    return name, message
 
 # Initializing a varible to store imageurl inside function below
 server_received_imageurl = ""
@@ -120,6 +151,7 @@ def on_new_message(data):
         global server_received_name
         server_received_name = chatBot(server_received_name, server_received_message)[0]
         server_received_message = chatBot(server_received_name, server_received_message)[1]
+        # server_received_imageurl = "/static/images/chatbot.png"
         
     
     # Insert data to the database
