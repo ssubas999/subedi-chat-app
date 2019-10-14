@@ -7,7 +7,7 @@ from rfc3987 import parse
 
 from google.oauth2 import id_token
 from google.auth.transport import requests
-# ********
+
 
 app = flask.Flask(__name__)
 
